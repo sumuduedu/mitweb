@@ -2,10 +2,10 @@
 
 {% block content %}
 
-<h3 class="mb-3">Courses</h3>
+<h3 class="mb-3">Students</h3>
 
-<a href="{{ url_for('courses.add_course') }}" class="btn btn-primary mb-3">
-    + Add Course
+<a href="{{ url_for('students.add_student') }}" class="btn btn-primary mb-3">
+    + Add Student
 </a>
 
 <!-- Flash Messages -->
@@ -20,39 +20,38 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Duration</th>
-            <th>Fee</th>
+            <th>Email</th>
+            <th>Phone</th>
             <th width="200">Actions</th>
         </tr>
     </thead>
-    <tbody>
 
-        {% for c in courses %}
+    <tbody>
+        {% for s in students %}
         <tr>
-            <td>{{ c.id }}</td>
-            <td>{{ c.name }}</td>
-            <td>{{ c.duration }}</td>
-            <td>{{ c.fee }}</td>
+            <td>{{ s.id }}</td>
+            <td>{{ s.name }}</td>
+            <td>{{ s.email }}</td>
+            <td>{{ s.phone }}</td>
             <td>
-                <!-- Edit -->
-                <a href="{{ url_for('courses.edit_course', id=c.id) }}"
+
+                <a href="{{ url_for('students.edit_student', id=s.id) }}"
                    class="btn btn-warning btn-sm">
                    Edit
                 </a>
 
-                <!-- Delete (POST method) -->
-                <form action="{{ url_for('courses.delete_course', id=c.id) }}"
+                <form action="{{ url_for('students.delete_student', id=s.id) }}"
                       method="POST"
                       style="display:inline;">
                     <button class="btn btn-danger btn-sm"
-                            onclick="return confirm('Are you sure?')">
+                            onclick="return confirm('Delete this student?')">
                         Delete
                     </button>
                 </form>
+
             </td>
         </tr>
         {% endfor %}
-
     </tbody>
 </table>
 
