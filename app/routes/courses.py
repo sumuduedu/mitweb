@@ -1,10 +1,12 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from app.models import Course
 from app.extensions import db
+from flask_login import login_required
 
 courses_bp = Blueprint('courses', __name__)
 
 @courses_bp.route("/")
+@login_required
 def list_courses():
     courses = Course.query.all()
     return render_template("courses/list.html", courses=courses)
