@@ -1,36 +1,30 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.models import User
 from app.extensions import db
 from flask_login import login_user, logout_user
 from werkzeug.security import check_password_hash
-
 
 auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        user = User.query.filter_by(username=request.form["username"]).first()
+        username = request.form["username"]
+        password = request.form["password"]
 
-        if user and check_password_hash(user.password, request.form["password"]):
+        user = User.query.filter_by(username=username).first()
+
+        if user and check_password_hash(user.password, password):
             login_user(user)
 
-            if user.role == "admin":
-                return redirect(url_for("courses.list_courses"))
+            # 🔥 Redirect ALL roles to dashboard
+            return redirect(url_for("dashboard.dashboard"))
 
-            elif user.role == "teacher":
-                return redirect(url_for("courses.list_courses"))
-
-            elif user.role == "student":
-                return redirect(url_for("courses.list_courses"))
-
-            elif user.role == "parent":
-                return redirect(url_for("courses.list_courses"))
-
-            elif user.role == "staff":
-                return redirect(url_for("courses.list_courses"))
+        else:
+            flash("Invalid username or password", "danger")
 
     return render_template("auth/login.html")
+
 
 @auth_bp.route("/logout")
 def logout():
