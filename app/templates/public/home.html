@@ -2,41 +2,176 @@
 
 {% block content %}
 
-<div class="hero">
-    <h1>Welcome to MIT Training Center</h1>
-    <p>Build your future with modern IT skills</p>
-    <a href="/courses" class="btn btn-light mt-3">View Courses</a>
+<!-- 🔥 HERO SECTION -->
+<div class="hero position-relative overflow-hidden" data-aos="fade-down">
+
+    <div class="container">
+        <h1 class="mb-3">Build Your Future with MIT Training</h1>
+        <p class="mb-4">Modern IT education with real-world skills and career focus</p>
+
+        <a href="/courses" class="btn btn-light btn-lg me-2">Explore Courses</a>
+        <a href="/signup" class="btn btn-outline-light btn-lg">Get Started</a>
+    </div>
+
+    <div class="hero-glow"></div>
+
 </div>
 
-<div class="container mt-5">
-
-    <h3 class="text-center mb-4">Our Courses</h3>
+<!-- 📊 STATS SECTION -->
+<div class="container text-center mt-5">
 
     <div class="row">
 
-        <div class="col-md-4">
-            <div class="card p-3 shadow">
-                <h5>Web Development</h5>
-                <p>Learn Flask, Django, and modern web apps</p>
+        <div class="col-md-4" data-aos="zoom-in">
+            <h2 class="counter" data-target="500">0</h2>
+            <p>Students Trained</p>
+        </div>
+
+        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+            <h2 class="counter" data-target="25">0</h2>
+            <p>Courses Offered</p>
+        </div>
+
+        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+            <h2 class="counter" data-target="20">0</h2>
+            <p>Years Experience</p>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- 🎯 FEATURES -->
+<div class="container mt-5">
+
+    <h3 class="text-center mb-4" data-aos="fade-up">Why Choose Us</h3>
+
+    <div class="row">
+
+        <div class="col-md-4" data-aos="fade-up">
+            <div class="card p-4 shadow text-center">
+                <h5>💻 Practical Learning</h5>
+                <p>Hands-on projects and real-world experience</p>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="card p-3 shadow">
-                <h5>Python Programming</h5>
-                <p>Master Python from basics to advanced</p>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="card p-4 shadow text-center">
+                <h5>👨‍🏫 Expert Teaching</h5>
+                <p>Over 20 years of teaching excellence</p>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="card p-3 shadow">
-                <h5>Data Science</h5>
-                <p>Learn AI, ML, and data analysis</p>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="card p-4 shadow text-center">
+                <h5>🎯 Career Focused</h5>
+                <p>Job-ready skills and industry preparation</p>
             </div>
         </div>
 
     </div>
 
 </div>
+
+<!-- 📚 DYNAMIC COURSES -->
+<div class="container mt-5">
+
+    <h3 class="text-center mb-4" data-aos="fade-up">Popular Courses</h3>
+
+    <div class="row">
+
+        {% if courses %}
+            {% for c in courses %}
+            <div class="col-md-4" data-aos="fade-up">
+
+                <div class="card p-3 shadow mb-4">
+                    <h5>{{ c.name }}</h5>
+                    <p>Duration: {{ c.duration }}</p>
+                    <p>Fee: Rs. {{ c.fee }}</p>
+
+                    <a href="/login" class="btn btn-primary w-100">Enroll Now</a>
+                </div>
+
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center">No courses available yet.</p>
+        {% endif %}
+
+    </div>
+
+</div>
+
+<!-- 💬 TESTIMONIAL -->
+<div class="container mt-5 text-center">
+
+    <h3 class="mb-4" data-aos="fade-up">What Students Say</h3>
+
+    <div class="card p-4 shadow mx-auto" style="max-width: 600px;" data-aos="zoom-in">
+        <p>"This training helped me land my first IT job. Highly recommended!"</p>
+        <strong>- Student</strong>
+    </div>
+
+</div>
+
+<!-- 🚀 CTA SECTION -->
+<div class="mt-5 p-5 text-center text-white"
+     style="background: linear-gradient(to right, #0d6efd, #6610f2);"
+     data-aos="fade-up">
+
+    <h2>Start Your Journey Today</h2>
+    <p>Join MIT Training and transform your future</p>
+
+    <a href="/signup" class="btn btn-light btn-lg mt-2">Register Now</a>
+
+</div>
+
+<!-- ✨ COUNTER SCRIPT -->
+<script>
+    const counters = document.querySelectorAll('.counter');
+
+    counters.forEach(counter => {
+        const update = () => {
+            const target = +counter.getAttribute('data-target');
+            const current = +counter.innerText;
+
+            const increment = target / 100;
+
+            if (current < target) {
+                counter.innerText = Math.ceil(current + increment);
+                setTimeout(update, 20);
+            } else {
+                counter.innerText = target;
+            }
+        };
+
+        update();
+    });
+</script>
+
+<!-- 🎨 EXTRA STYLES -->
+<style>
+.hero-glow {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgba(255,255,255,0.2);
+    filter: blur(100px);
+    top: -50px;
+    right: -50px;
+    animation: float 6s infinite alternate;
+}
+
+@keyframes float {
+    from { transform: translateY(0px); }
+    to { transform: translateY(40px); }
+}
+
+.counter {
+    font-size: 36px;
+    font-weight: 600;
+    color: #0d6efd;
+}
+</style>
 
 {% endblock %}
