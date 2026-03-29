@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3 class="mb-3">Courses</h3>
+
+<a href="{{ url_for('courses.add_course') }}" class="btn btn-primary mb-3">
+    + Add Course
+</a>
+
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">{{ message }}</div>
+  {% endfor %}
+{% endwith %}
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Duration</th>
+            <th>Fee</th>
+            <th width="200">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for c in courses %}
+        <tr>
+            <td>{{ c.id }}</td>
+            <td>{{ c.name }}</td>
+            <td>{{ c.duration }}</td>
+            <td>{{ c.fee }}</td>
+            <td>
+                <!-- Edit -->
+                <a href="{{ url_for('courses.edit_course', id=c.id) }}"
+                   class="btn btn-warning btn-sm">
+                   Edit
+                </a>
+
+                <!-- Delete (POST method) -->
+                <form action="{{ url_for('courses.delete_course', id=c.id) }}"
+                      method="POST"
+                      style="display:inline;">
+                    <button class="btn btn-danger btn-sm"
+                            onclick="return confirm('Are you sure?')">
+                        Delete
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
+{% endblock %}

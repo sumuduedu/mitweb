@@ -14,7 +14,21 @@ def login():
 
         if user and check_password_hash(user.password, request.form["password"]):
             login_user(user)
-            return redirect(url_for("courses.list_courses"))
+
+            if user.role == "admin":
+                return redirect(url_for("courses.list_courses"))
+
+            elif user.role == "teacher":
+                return redirect(url_for("courses.list_courses"))
+
+            elif user.role == "student":
+                return redirect(url_for("courses.list_courses"))
+
+            elif user.role == "parent":
+                return redirect(url_for("courses.list_courses"))
+
+            elif user.role == "staff":
+                return redirect(url_for("courses.list_courses"))
 
     return render_template("auth/login.html")
 
